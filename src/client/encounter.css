@@ -1,0 +1,68 @@
+.start-encounter { margin: 0 0 14px; }
+.watch-rules { padding: 18px; background: #172e39; border: 1px solid var(--line); border-radius: 7px; margin-bottom: 18px; }
+.watch-rules strong { color: var(--amber); font-size: 14px; }
+.watch-rules p { font-size: 13px; color: #b7c4c6; }
+.tutorial-option { display: flex; align-items: center; gap: 12px; font-size: 12px; letter-spacing: 0; line-height: 1.6; margin: 12px 0 0; cursor: pointer; min-height: 44px; }
+.tutorial-option input { width: 18px; height: 18px; min-height: 18px; padding: 0; margin: 0; accent-color: var(--amber); flex-shrink: 0; }
+.watch-progress { display: flex; gap: 12px 24px; align-items: center; flex-wrap: wrap; border: 1px solid var(--line); background: var(--panel); border-radius: 7px; padding: 15px 18px; margin: 0 0 25px; font-size: 13px; }
+.watch-progress > span:first-child { color: #b9d4bb; }
+.watch-progress > span:nth-child(2) { color: var(--amber); }
+.watch-progress > span:last-child { font-size: 11px; color: #b7c4c6; }
+.practice-guide { padding: 20px; background: #19353b; border: 1px solid #5f8f87; border-radius: 8px; margin-bottom: 24px; }
+.practice-guide h2 { font-size: 25px; }
+.practice-guide ol { padding-left: 22px; font-size: 14px; line-height: 1.8; }
+.practice-guide p { font-size: 12px; color: #b7c4c6; }
+.encounter-screen { padding: 36px 0 48px; }
+.encounter-topline { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.encounter-code { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.encounter-code strong { color: var(--amber); letter-spacing: 2px; padding-left: 8px; }
+.encounter-screen h1 { font-size: clamp(32px, 4vw, 48px); }
+.encounter-instructions { max-width: 800px; color: #b7c4c6; font-size: 14px; margin-bottom: 28px; }
+.encounter-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 26px; }
+.instrument-panel { background: var(--panel); border: 1px solid var(--line); padding: 24px; border-radius: 9px; margin-bottom: 20px; min-width: 0; }
+.panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.panel-heading h2 { font-size: 26px; }
+.panel-heading > span { color: var(--amber); font-size: 9px; letter-spacing: 1px; }
+.panel-help { color: #aebfc3; font-size: 12px; margin: 12px 0 20px; }
+.clue-card { padding: 20px; margin-top: 16px; border: 1px solid #4a626b; border-left: 3px solid var(--amber); border-radius: 5px; background: #10252f; }
+.clue-card h3 { font-size: 15px; font-weight: 500; margin: 9px 0; }
+.clue-card p { font-size: 15px; line-height: 1.8; color: #e0e5dc; white-space: pre-line; }
+.clue-card .secondary-button { font-size: 12px; }
+.shared-log ul { list-style: none; margin: 16px 0 0; padding: 0; }
+.shared-log li { border-top: 1px solid var(--line); padding: 16px 0 0; margin-top: 16px; }
+.shared-log li strong { font-size: 13px; color: var(--amber); }
+.shared-log li small { display: block; color: #afc1c6; margin-top: 5px; }
+.shared-log li p { font-size: 14px; }
+.instrument-panel fieldset { padding: 0; border: none; margin: 22px 0; min-width: 0; }
+.instrument-panel legend { color: #e9e5d8; font-size: 13px; margin-bottom: 12px; }
+.choice-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.choice { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 50px; padding: 10px 7px; margin: 0; border: 1px solid #60747c; border-radius: 5px; font-size: 12px; letter-spacing: 0; cursor: pointer; }
+.choice input { width: 15px; height: 15px; min-height: 0; margin: 0; padding: 0; accent-color: var(--amber); flex-shrink: 0; }
+.choice.selected { color: var(--amber); border-color: var(--amber); background: #36423e; }
+.choice:has(input:focus-visible) { outline: 3px solid var(--amber); outline-offset: 2px; }
+fieldset:disabled .choice { opacity: .6; cursor: default; }
+.current-proposal { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--line); }
+.current-proposal h3 { font-size: 14px; font-weight: 500; }
+.current-proposal p { color: #afc0c3; font-size: 12px; }
+.current-proposal .proposed-pair { color: var(--amber); font-size: 22px; }
+.confirmation-list { list-style: none; margin: 20px 0; padding: 0; }
+.confirmation-list li { display: flex; justify-content: space-between; gap: 14px; font-size: 12px; border-top: 1px solid var(--line); padding: 13px 0; overflow-wrap: anywhere; }
+.confirmation-list li > span:last-child { color: #b9d4bb; flex-shrink: 0; }
+.current-proposal .confirm-count { margin-bottom: 0; text-align: center; }
+.encounter-result { border: 1px solid #6a9b7e; background: #1e3d36; border-radius: 8px; padding: 24px; margin: 26px 0; }
+.encounter-result.failure { border-color: #aa8766; background: #3a3530; }
+.encounter-result h2 { font-size: 29px; }
+.encounter-result p { font-size: 14px; }
+.encounter-result .primary-button { max-width: 300px; }
+.encounter-actions { display: flex; justify-content: space-between; gap: 10px; }
+@media (max-width: 800px) {
+  .encounter-grid { grid-template-columns: 1fr; gap: 0; }
+  .encounter-topline { flex-wrap: wrap; }
+  .instrument-panel { padding: 18px; }
+  .clue-card { padding: 16px; }
+}
+@media (max-width: 400px) {
+  .choice { font-size: 11px; gap: 4px; padding: 8px 4px; }
+  .choice-row { gap: 5px; }
+  .instrument-panel { padding: 14px; }
+}

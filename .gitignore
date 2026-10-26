@@ -1,0 +1,11 @@
+node_modules/
+.pnpm-store/
+dist/
+test-results/
+playwright-report/
+.env
+.env.*
+!.env.example
+tmp/
+artifacts/
+*.log

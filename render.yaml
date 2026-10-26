@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: last-light
+    runtime: node
+    plan: free
+    numInstances: 1
+    buildCommand: corepack pnpm install --frozen-lockfile && corepack pnpm run build
+    startCommand: node dist/server/index.js --production
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.22.1
+      - key: PUBLIC_ORIGIN
+        value: ""
