@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { RoomAction, RoomView, RouteId, SignalId } from '../shared/protocol';
+import { SeaChart } from './SeaChart';
 
 interface Props {
   room: RoomView;
@@ -62,6 +63,7 @@ export function Encounter({ room, playerId, busy, connected, action }: Props) {
         </section>
       </div>
       <div>
+        <SeaChart encounter={encounter} playerId={playerId} locked={locked} action={action}/>
         <section className="instrument-panel" aria-label="Route and beacon proposal">
           <div className="panel-heading"><h2>Plot a passage</h2></div>
           <p className="panel-help">{encounter.instructions}</p>

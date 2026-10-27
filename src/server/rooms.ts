@@ -1,5 +1,5 @@
 import { createHash, randomBytes, randomInt, randomUUID } from 'node:crypto';
-import type { EncounterResult, ErrorCode, ProposalView, RoomView, RouteId, SessionView, SharedClue, SignalId, Station } from '../shared/protocol.js';
+import type { ChartPing, PingIntent, EncounterResult, ErrorCode, ProposalView, RoomView, RouteId, SessionView, SharedClue, SignalId, Station } from '../shared/protocol.js';
 import { createPuzzle, type Puzzle } from './puzzles/engine.js';
 
 const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -15,6 +15,7 @@ interface Encounter {
   id: string;
   puzzle: Puzzle;
   sharedClues: SharedClue[];
+  pings: ChartPing[];
   proposal: ProposalView | null;
   revision: number;
   confirmations: string[];
@@ -169,7 +170,7 @@ export class Rooms {
       const signature = JSON.stringify(puzzle.clues.map(clue => clue.text));
       if (!session.history.includes(signature) || attempt >= 15) { session.history.push(signature); break; }
     }
-    room.encounter = { id: randomUUID(), puzzle, sharedClues: [], proposal: null, revision: 0, confirmations: [], result: null, continueReady: [] };
+    room.encounter = { id: randomUUID(), puzzle, sharedClues: [], pings: [], proposal: null, revision: 0, confirmations: [], result: null, continueReady: [] };
     room.phase = 'DISCUSS';
   }
   share(socketId: string, encounterId: string, clueId: string) {
@@ -181,6 +182,15 @@ export class Rooms {
       encounter.sharedClues.push({ ...clue, sharedBy: player.id, nickname: player.nickname });
       room.version++;
     }
+    return { code: room.code, playerId: player.id, room: this.view(room, player.id) };
+  }
+  ping(socketId: string, encounterId: string, routeId: RouteId, intent: PingIntent | null) {
+    const { room, player, encounter } = this.discuss(socketId, encounterId);
+    if (!encounter.puzzle.availableRoutes.includes(routeId)) throw new RoomError('INVALID_INPUT', 'Choose a route on this chart.');
+    // Each seat owns one marker. Opinions never change the proposal or its confirmations.
+    encounter.pings = encounter.pings.filter(ping => ping.playerId !== player.id);
+    if (intent) encounter.pings.push({ playerId: player.id, nickname: player.nickname, routeId, intent });
+    room.version++;
     return { code: room.code, playerId: player.id, room: this.view(room, player.id) };
   }
   propose(socketId: string, encounterId: string, expectedRevision: number, routeId: RouteId, signalId: SignalId) {
@@ -264,6 +274,7 @@ export class Rooms {
         routes: [...encounter.puzzle.availableRoutes], signals: [...encounter.puzzle.availableSignals], continueReady: [...encounter.continueReady],
         privateClues: encounter.puzzle.clues.filter(clue => ownStations.includes(clue.station)).map(clue => ({ ...clue })),
         sharedClues: encounter.sharedClues.map(clue => ({ ...clue })),
+        pings: encounter.pings.map(ping => ({ ...ping })),
         proposal: encounter.proposal ? { ...encounter.proposal } : null, revision: encounter.revision,
         confirmations: [...encounter.confirmations], paused: room.players.some(p => !p.socketId),
         result: encounter.result ? { ...encounter.result } : null,

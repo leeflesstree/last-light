@@ -2,6 +2,8 @@ export const STATIONS = ['Chart Table', 'Stormglass', 'Signal Desk', 'Beacon Con
 export type Station = typeof STATIONS[number];
 export type RouteId = 'A' | 'B' | 'C';
 export type SignalId = 'Anchor' | 'Bell' | 'Star';
+export type PingIntent = 'inspect' | 'safe' | 'avoid';
+export interface ChartPing { playerId: string; nickname: string; routeId: RouteId; intent: PingIntent }
 export type PuzzleFamily = 'SAFE_PASSAGE' | 'BROKEN_COMPASS' | 'SIGNAL_FOG';
 export interface SessionView { rescued: number; damage: number; completed: number; practicing: boolean; outcome: 'VICTORY' | 'DEFEAT' | null }
 export interface ClueView { id: string; station: Station; title: string; text: string }
@@ -20,6 +22,7 @@ export interface EncounterView {
   signals: SignalId[];
   privateClues: ClueView[];
   sharedClues: SharedClue[];
+  pings: ChartPing[];
   proposal: ProposalView | null;
   revision: number;
   confirmations: string[];
@@ -62,6 +65,7 @@ export interface ClientEvents {
   'game:start': (data: { requestId: string; tutorial?: boolean }, ack: (reply: Reply) => void) => void;
   'game:continue': (data: { requestId: string; encounterId: string }, ack: (reply: Reply) => void) => void;
   'game:share': (data: { requestId: string; encounterId: string; clueId: string }, ack: (reply: Reply) => void) => void;
+  'game:ping': (data: { requestId: string; encounterId: string; routeId: RouteId; intent: PingIntent | null }, ack: (reply: Reply) => void) => void;
   'game:propose': (data: { requestId: string; encounterId: string; expectedRevision: number; routeId: RouteId; signalId: SignalId }, ack: (reply: Reply) => void) => void;
   'game:confirm': (data: { requestId: string; encounterId: string; expectedRevision: number }, ack: (reply: Reply) => void) => void;
   'game:lobby': (data: { requestId: string }, ack: (reply: Reply) => void) => void;

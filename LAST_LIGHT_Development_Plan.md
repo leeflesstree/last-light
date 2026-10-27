@@ -2,7 +2,7 @@
 
 Version 1.0 · Prepared October 25, 2026 · Target submission October 30, 2026, before 11:59 p.m. Pacific
 
-Status: build 0.3 implements the M2/M3 functional core: three solver-checked puzzle families, deterministic seeds, optional unscored practice, shared proposals, unanimous confirmation/continuation, three-rescue/three-damage sessions, victory/defeat and replay. Integration and desktop/mobile browser tests cover full watches. Permanent hosting, physical-device tests, signed-in mission review and later presentation/release gates remain open. See docs/DEVELOPMENT_LOG.md.
+Status: build 0.4 adds the M4 presentation/accessibility slice: original sea chart, synchronized crew route markers, persisted reduced-motion control, skip navigation, and a keyboard-only full-watch browser test. The core session and public Render hosting are implemented. Physical-device/external playtests, assistive-technology review, signed-in mission review, and final release assets remain open. See docs/DEVELOPMENT_LOG.md.
 
 ## 1. Product goal
 

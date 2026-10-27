@@ -17,6 +17,7 @@ const startSchema = envelope.extend({ tutorial: z.boolean().optional().default(f
 const encounterSchema = envelope.extend({ encounterId: z.string().uuid() });
 const revisionSchema = encounterSchema.extend({ expectedRevision: z.number().int().min(0) });
 const shareSchema = encounterSchema.extend({ clueId: z.string().min(1).max(40) });
+const pingSchema = encounterSchema.extend({ routeId: z.enum(['A', 'B', 'C']), intent: z.enum(['inspect', 'safe', 'avoid']).nullable() });
 const proposalSchema = revisionSchema.extend({ routeId: z.enum(['A', 'B', 'C']), signalId: z.enum(['Anchor', 'Bell', 'Star']) });
 
 export async function createAppServer(options: { production?: boolean; graceMs?: number; idleMs?: number; sweepMs?: number; development?: boolean } = {}) {
@@ -124,6 +125,10 @@ export async function createAppServer(options: { production?: boolean; graceMs?:
     });
     handle('game:share', shareSchema, input => {
       const result = rooms.share(socket.id, input.encounterId, input.clueId); broadcast(result.code);
+      return { ok: true, room: result.room, playerId: result.playerId };
+    });
+    handle('game:ping', pingSchema, input => {
+      const result = rooms.ping(socket.id, input.encounterId, input.routeId, input.intent); broadcast(result.code);
       return { ok: true, room: result.room, playerId: result.playerId };
     });
     handle('game:propose', proposalSchema, input => {

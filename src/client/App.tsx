@@ -10,6 +10,15 @@ export function App() {
   const [code, setCode] = useState(() => new URLSearchParams(location.search).get('room')?.slice(0, 6).toUpperCase() ?? '');
   const [copied, setCopied] = useState('');
   const [tutorial, setTutorial] = useState(true);
+  const [reducedMotion, setReducedMotion] = useState(() => {
+    try { return localStorage.getItem('last-light-motion-v1') === 'reduce' || matchMedia('(prefers-reduced-motion: reduce)').matches; }
+    catch { return true; }
+  });
+  function toggleMotion() {
+    const next = !reducedMotion;
+    setReducedMotion(next);
+    try { localStorage.setItem('last-light-motion-v1', next ? 'reduce' : 'full'); } catch { /* This visit still respects the setting. */ }
+  }
   const me = room?.players.find(p => p.id === playerId);
   const online = room?.players.filter(p => p.connected).length ?? 0;
   const invite = room ? `${location.origin}/?room=${room.code}` : '';
@@ -21,12 +30,14 @@ export function App() {
     event.preventDefault();
     void action(mode === 'create' ? 'room:create' : 'room:join', { nickname, ...(mode === 'join' ? { code } : {}) });
   }
-  return <div className="app-shell">
+  return <div className="app-shell" data-motion={reducedMotion ? 'reduce' : 'full'}>
+    <a className="skip-link" href="#main">Skip to game</a>
     <header className="site-header">
       <a className="brand" href="/" aria-label="LAST LIGHT home"><span className="brand-mark" aria-hidden="true">✦</span> LAST LIGHT</a>
       <div className="header-right"><span className="edition">A COOPERATIVE MYSTERY</span><span className={`connection ${connected ? 'online' : ''}`} role="status"><i/>{connected ? 'Signal connected' : 'Connecting…'}</span></div>
     </header>
-    <main id="main">
+    <div className="play-settings"><button className="text-button" aria-pressed={reducedMotion} onClick={toggleMotion}>Reduce motion: {reducedMotion ? 'on' : 'off'}</button><span>No sound or voice required</span></div>
+    <main id="main" tabIndex={-1}>
       {error && <div className="error-banner" role="alert"><span>{error}</span>{!connected && <button onClick={reconnect}>Reconnect</button>}</div>}
       {room?.notice && <p className="crew-message" role="status">{room.notice}</p>}
       {!room ? <>
@@ -79,6 +90,6 @@ export function App() {
         <aside className="invite-panel" aria-labelledby="invite-title"><div className="scene-wrap"><Coast compact/></div><div className="invite-content"><div className="eyebrow">YOUR PRIVATE SIGNAL</div><h2 id="invite-title">Bring a friend aboard.</h2><p>Open this site on another device and enter:</p><div className="room-code" aria-label={`Room code ${room.code}`} data-testid="room-code">{room.code}</div><button className="secondary-button" onClick={() => void copy(room.code, 'Code')}>Copy room code <span aria-hidden="true">⧉</span></button><button className="text-button invite-link" onClick={() => void copy(invite, 'Invite link')}>Copy invitation link ↗</button><p className="copy-feedback" role="status">{copied}</p><div className="invite-address"><label htmlFor="invite-url">OR SHARE THIS LINK</label><input id="invite-url" readOnly value={invite} onFocus={e => e.target.select()}/></div><p className="privacy-note">Only people with your code can find this room. No account needed.</p></div></aside>
       </div>}
     </main>
-    <footer><span>LAST LIGHT <b>✦</b> LINDWAKE</span><span>PLAYABLE WATCH <b>·</b> BUILD 0.3</span><span>A little trust goes a long way.</span></footer>
+    <footer><span>LAST LIGHT <b>✦</b> LINDWAKE</span><span>PLAYABLE WATCH <b>·</b> BUILD 0.4</span><span>A little trust goes a long way.</span></footer>
   </div>;
 }

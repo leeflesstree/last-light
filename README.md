@@ -2,6 +2,12 @@
 
 One lighthouse. One storm. Nobody has the whole picture.
 
+Play: https://last-light-b62k.onrender.com
+
+Build 0.4 adds a shared schematic sea chart and one route marker per keeper (Inspect, Looks safe, or Avoid). These are opinions, separate from the crew proposal. Markers survive refresh and reset for each ship. Use the Reduce motion control above the game; operating-system reduced-motion preferences are always respected. All actions work by keyboard, with a Skip to game link. No sound or voice is required.
+
+The Free Render host can take about a minute to wake after inactivity. Rooms are in memory and end on server restart or deployment.
+
 This prototype now builds a **complete cooperative watch** from the development plan: 2–4 browser players, optional practice, three puzzle families, private station clues, shared notes, proposals, unanimous confirmation, victory/defeat and replay. No player account or installation is required.
 
 **Rules:** rescue three ships before the lighthouse takes three damage marks. Practice is optional and unscored. Every keeper gets their own station notes; share them, propose a route and beacon, and have everyone confirm the exact same proposal. Correct answers rescue a ship; incorrect answers add damage and divert the ship away. Review the explanation, then every keeper chooses Continue. A watch contains 3–5 scored ships. At the end, the host can replay in the same room. There is no timer.

@@ -1,4 +1,28 @@
 .start-encounter { margin: 0 0 14px; }
+.skip-link { position: absolute; top: 0; left: 12px; z-index: 20; padding: 0; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); background: #edc783; color: #10252f; }
+.skip-link:focus { position: fixed; top: 12px; padding: 16px; width: auto; height: auto; clip-path: none; }
+.play-settings { display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 6px 20px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.play-settings span { color: #afc0c3; font-size: 11px; }
+.play-settings .text-button { min-height: 44px; }
+.chart-scene { border: 1px solid #567278; border-radius: 12px; overflow: hidden; margin-bottom: 18px; }
+.chart-scene svg { display: block; width: 100%; height: auto; }
+.chart-route { color: #9ab7bb; }
+.chart-route.proposed { color: #f3c77c; }
+.chart-rescued { border-color: #afd7b0; animation: harbour-light 1.8s ease-out; box-shadow: 0 0 22px #afd7b019; }
+.chart-diverted { border-color: #dca662; }
+.chart-diverted .chart-ship { opacity: .4; }
+@keyframes harbour-light { from { box-shadow: 0 0 0 #afd7b000; } 45% { box-shadow: 0 0 35px #afd7b065; } to { box-shadow: 0 0 22px #afd7b019; } }
+.route-markers { display: grid; gap: 12px; }
+.route-marker h3 { font-size: 13px; margin: 0 0 8px; color: #edc783; }
+.ping-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+.ping-buttons button { min-height: 44px; font-size: 11px; padding: 8px 4px; border: 1px solid #63808a; background: #17343f; color: #e8e3d2; }
+.ping-buttons button span { display: block; font-size: 18px; }
+.ping-buttons button[aria-pressed="true"] { border: 2px solid #edc783; background: #34483f; }
+.chart-opinions { margin-top: 16px; font-size: 12px; color: #c5d5d4; overflow-wrap: anywhere; }
+.chart-opinions ul { padding-left: 18px; }
+.chart-opinions li { padding: 5px 0; }
+.chart-opinions p { font-size: 12px; }
+[data-motion="reduce"] *, [data-motion="reduce"] *::before, [data-motion="reduce"] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 .watch-rules { padding: 18px; background: #172e39; border: 1px solid var(--line); border-radius: 7px; margin-bottom: 18px; }
 .watch-rules strong { color: var(--amber); font-size: 14px; }
 .watch-rules p { font-size: 13px; color: #b7c4c6; }
