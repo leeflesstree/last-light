@@ -65,7 +65,9 @@ test('keyboard-only crew marks the chart, recovers markers, and wins a full watc
       await expect(guest.getByTestId('result-explanation')).toBeVisible();
       await expect(host.locator('.chart-rescued')).toHaveCSS('animation-name', 'none');
       if (ship < 2) {
+        const previousId = await host.locator('.encounter-screen').getAttribute('data-encounter');
         for (const page of [host, guest]) await activate(page, page.getByRole('button', { name: 'Continue to next ship', exact: true }));
+        for (const page of [host, guest]) await expect(page.locator('.encounter-screen')).not.toHaveAttribute('data-encounter', previousId!);
         await expect(host.getByText('No route markers yet. Each keeper can place one.', { exact: true })).toBeVisible();
       }
     }
